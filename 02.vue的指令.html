@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue的指令</title>
+    <link rel="stylesheet" href="./bootstrap.css">
+</head>
+<body>
+    <!-- 5. 使用vue指令，将vue中的model数据渲染到页面上 -->
+     <div id="app">
+        <!-- v-text指令 -->
+        <p v-text="'这是通过指令渲染的内容'">这是一个P标签</p>
+        <!-- 插值语法 -->
+        <p>{{ username }}</p>
+        <!-- v-html指令 -->
+        <div v-html="content"></div>
+        <!-- 属性绑定指令 -->
+        <input type="text" :placeholder="inputVal">
+        <div>{{ count }}</div>
+        <!-- 事件绑定指令 -->
+        <button @click="add(3,$event)"> +N </button>
+        <!-- 事件修饰符 -->
+        <a href="http://www.baidu.com" @click.prevent="gothere">链接</a>
+        <!-- 按键修饰符 -->
+        <input type="text" @keyup.esc="clearVal">
+        <!-- 双向数据绑定v-model -->
+        <div>
+            <p>{{ username }}</p>
+            <input type="text" v-model="username">
+        </div>
+        <hr>
+        <select name="" id="" v-model="value">
+            <option value="">请选择城市</option>
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">广州</option>
+        </select>
+
+        <!-- 条件渲染指令 -->
+     <p v-if="isDisplay">这是被v-if控制的元素</p>
+     <p v-show="isDisplay">这是被v-show控制的元素</p>
+
+     <div>
+        <p v-if="isDisplay">条件为真时显示</p>
+        <p v-else>条件为假时显示</p>
+     </div>
+     <hr>
+
+     <table class="table  table-striped table-hover table-bordered">
+        <thead>
+            <th>索引</th>
+            <th>id</th>
+            <th>姓名</th>
+        </thead>
+        <tbody>
+            <tr v-for="(item,i) in list" :key="item.id">
+                <td>{{i}}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+        </tbody>
+     </table>
+     </div>
+     
+<!--1. 导入vue.js，在window中生成一个Vue构造函数 -->
+    <script src="./vue-2.6.12.js"></script>
+    <script>
+        // 2. 创建vm（vue实例）
+        const vm = new Vue({
+            // 3. 指定vue操作的区域（view）
+            el: '#app',
+            // 4. 创建数据对象
+            data: {
+                username: 'zhangsan',
+                content: '<h3 style="background-color: red;">这是一个h3标签</h3>',
+                inputVal: '请输入内容',
+                count: 1,
+                value: '',
+                isDisplay: false,
+                list: [
+                    {id:1,name:'张三'},
+                    {id:2,name:'李四'},
+                    {id:3,name:'王五'}
+                ]
+            },
+            // 事件处理函数
+            methods:{
+                add(n,e) {
+                    this.count += n
+                    console.log(e)
+                },
+                gothere() {
+                    console.log('点击了链接')
+                },
+                clearVal(e) {
+                   
+                    console.log(e.target.value)
+                    e.target.value = ''
+                }
+
+            }
+        })
+
+
+    </script>
+</body>
+</html>
